@@ -1,13 +1,26 @@
 import { useState } from "react";
 import { Input } from "../components/ui/Input";
 import Button from "../components/ui/Button";
+import { getWeatherByCity } from "../services/weatherApi";
 
 export const Home = () => {
   const [city, setCity] = useState("");
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
-    console.log("City:", city);
+
+    if (!city.trim()) {
+      console.log("Please enter a city name");
+      return;
+    }
+
+    try {
+      const data = await getWeatherByCity(city);
+      console.log("Weather", data);
+    } catch (err) {
+      console.error("Error", err);
+    }
+
     setCity("");
   };
 
