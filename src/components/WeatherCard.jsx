@@ -1,5 +1,5 @@
 export const WeatherCard = ({ data }) => {
-  const { location, current, forecast } = data;
+  const { location, current } = data;
 
   return (
     <div className="px-6 py-4 bg-white rounded-lg  mt-4">
@@ -20,7 +20,7 @@ export const WeatherCard = ({ data }) => {
         <div>
           <p className="text-gray-500">Min / Max</p>
           <p className="font-semibold text-gray-800">
-            {Math.round(forecast.forecastday[0].day.mintemp_c)}° / {Math.round(forecast.forecastday[0].day.maxtemp_c)}°
+            {Math.round(current.temp_min)}° / {Math.round(current.temp_max)}°
           </p>
         </div>
         <div>
