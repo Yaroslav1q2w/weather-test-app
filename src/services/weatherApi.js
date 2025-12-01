@@ -8,7 +8,7 @@ export const getWeatherByCity = async (city) => {
   }
 
   try {
-    const response = await fetch(`${WEATHER_API}/current.json?key=${API_KEY}&q=${city}`);
+    const response = await fetch(`${WEATHER_API}/forecast.json?key=${API_KEY}&q=${city}&days=1`);
 
     if (!response.ok) {
       if (response.status === 400) {

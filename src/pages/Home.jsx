@@ -2,26 +2,37 @@ import { useState } from "react";
 import { Input } from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import { getWeatherByCity } from "../services/weatherApi";
+import { WeatherCard } from "../components/WeatherCard";
 
 export const Home = () => {
   const [city, setCity] = useState("");
+  const [weather, setWeather] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSearch = async (e) => {
     e.preventDefault();
 
     if (!city.trim()) {
-      console.log("Please enter a city name");
+      setError("Please enter a city name");
       return;
     }
 
+    setLoading(true);
+    setError("");
+    setWeather(null);
+
     try {
       const data = await getWeatherByCity(city);
-      console.log("Weather", data);
-    } catch (err) {
-      console.error("Error", err);
-    }
+      setWeather(data);
 
-    setCity("");
+      console.log("Weather ", data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+      setCity("");
+    }
   };
 
   return (
@@ -32,6 +43,12 @@ export const Home = () => {
         <Input value={city} onChange={(e) => setCity(e.target.value)} />
         <Button type="submit">Search</Button>
       </form>
+
+      {loading && <p className="mt-4 text-gray-500">Loading...</p>}
+
+      {error && <div className="p-3 mt-4 text-red-700 border border-red-200 rounded bg-red-50">{error}</div>}
+
+      {weather && <WeatherCard data={weather} />}
     </div>
   );
 };
