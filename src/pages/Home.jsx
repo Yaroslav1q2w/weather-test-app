@@ -3,12 +3,15 @@ import { Input } from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import { getWeatherByCity } from "../services/weatherApi";
 import { WeatherCard } from "../components/WeatherCard";
+import { useSearchHistory } from "../hooks/useSearchHistory";
 
 export const Home = () => {
   const [city, setCity] = useState("");
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const { history, addToHistory } = useSearchHistory();
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -25,8 +28,10 @@ export const Home = () => {
     try {
       const data = await getWeatherByCity(city);
       setWeather(data);
+      addToHistory(data.location.name);
 
       console.log("Weather ", data);
+      console.log("History: ", history);
     } catch (err) {
       setError(err.message);
     } finally {
