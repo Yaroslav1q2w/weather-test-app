@@ -3,6 +3,7 @@ import { Input } from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import { getWeatherByCity } from "../services/weatherApi";
 import { WeatherCard } from "../components/WeatherCard";
+import { SearchHistory } from "../components/SearchHistory";
 import { useSearchHistory } from "../hooks/useSearchHistory";
 
 export const Home = () => {
@@ -54,6 +55,8 @@ export const Home = () => {
       {error && <div className="p-3 mt-4 text-red-700 border border-red-200 rounded bg-red-50">{error}</div>}
 
       {weather && <WeatherCard data={weather} />}
+
+      {history.length !== 0 && <SearchHistory history={history} />}
     </div>
   );
 };

@@ -14,7 +14,6 @@ export const useSearchHistory = () => {
 
   const addToHistory = (cityName) => {
     setHistory((prev) => {
-      console.log("Prev: ", prev);
       const filtered = prev.filter((city) => city.toLowerCase() !== cityName.toLowerCase());
       return [cityName, ...filtered].slice(0, 10);
     });
