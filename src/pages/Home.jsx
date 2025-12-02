@@ -14,14 +14,7 @@ export const Home = () => {
 
   const { history, addToHistory } = useSearchHistory();
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-
-    if (!city.trim()) {
-      setError("Please enter a city name");
-      return;
-    }
-
+  const fetchWeather = async (city) => {
     setLoading(true);
     setError("");
     setWeather(null);
@@ -37,8 +30,23 @@ export const Home = () => {
       setError(err.message);
     } finally {
       setLoading(false);
-      setCity("");
     }
+  };
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+
+    if (!city.trim()) {
+      setError("Please enter a city name");
+      return;
+    }
+
+    await fetchWeather(city);
+    setCity("");
+  };
+
+  const handleHistoryClick = async (city) => {
+    await fetchWeather(city);
   };
 
   return (
@@ -56,7 +64,7 @@ export const Home = () => {
 
       {weather && <WeatherCard data={weather} />}
 
-      {history.length !== 0 && <SearchHistory history={history} />}
+      {history.length !== 0 && <SearchHistory history={history} onCityClick={handleHistoryClick} />}
     </div>
   );
 };
