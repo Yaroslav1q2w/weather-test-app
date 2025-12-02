@@ -12,7 +12,7 @@ export const Home = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const { history, addToHistory } = useSearchHistory();
+  const { history, addToHistory, removeFromHistory } = useSearchHistory();
 
   const fetchWeather = async (city) => {
     setLoading(true);
@@ -64,7 +64,7 @@ export const Home = () => {
 
       {weather && <WeatherCard data={weather} />}
 
-      {history.length !== 0 && <SearchHistory history={history} onCityClick={handleHistoryClick} />}
+      {history.length !== 0 && <SearchHistory history={history} onCityClick={handleHistoryClick} onRemove={removeFromHistory} />}
     </div>
   );
 };

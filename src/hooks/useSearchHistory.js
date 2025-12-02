@@ -19,8 +19,13 @@ export const useSearchHistory = () => {
     });
   };
 
+  const removeFromHistory = (cityName) => {
+    setHistory((prev) => prev.filter((city) => city !== cityName));
+  };
+
   return {
     history,
     addToHistory,
+    removeFromHistory,
   };
 };
