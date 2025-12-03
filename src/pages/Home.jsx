@@ -11,6 +11,7 @@ export const Home = () => {
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [removedCity, setRemovedCity] = useState(null);
 
   const { history, addToHistory, removeFromHistory } = useSearchHistory();
 
@@ -18,6 +19,7 @@ export const Home = () => {
     setLoading(true);
     setError("");
     setWeather(null);
+    setRemovedCity(null);
 
     try {
       const data = await getWeatherByCity(city);
@@ -49,6 +51,18 @@ export const Home = () => {
     await fetchWeather(city);
   };
 
+  const handleRemove = (cityName) => {
+    removeFromHistory(cityName);
+    setRemovedCity(cityName);
+  };
+
+  const handleUndo = () => {
+    if (removedCity) {
+      addToHistory(removedCity);
+      setRemovedCity(null);
+    }
+  };
+
   return (
     <div className="max-w-md p-4 mx-auto mt-10">
       <h1 className="mb-10 text-4xl text-[#facb7d] font-semibold">Weather App</h1>
@@ -64,7 +78,19 @@ export const Home = () => {
 
       {weather && <WeatherCard data={weather} />}
 
-      {history.length !== 0 && <SearchHistory history={history} onCityClick={handleHistoryClick} onRemove={removeFromHistory} />}
+      {history.length !== 0 && <SearchHistory history={history} onCityClick={handleHistoryClick} onRemove={handleRemove} />}
+
+      {removedCity && (
+        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-3 rounded  flex items-center gap-3">
+          <span>{removedCity} removed</span>
+          <button onClick={handleUndo} className="px-3 py-1 bg-white text-gray-800 rounded">
+            Undo
+          </button>
+          <button onClick={() => setRemovedCity(null)} className="text-gray-400">
+            ×
+          </button>
+        </div>
+      )}
     </div>
   );
 };
