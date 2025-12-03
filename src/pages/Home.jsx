@@ -26,9 +26,6 @@ export const Home = () => {
       const data = await getWeatherByCity(city);
       setWeather(data);
       addToHistory(data.location.name);
-
-      console.log("Weather ", data);
-      console.log("History: ", history);
     } catch (err) {
       setError(err.message);
     } finally {
