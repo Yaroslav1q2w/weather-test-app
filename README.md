@@ -1,16 +1,56 @@
-# React + Vite
+## Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple weather application where you can search by city name and see the current forecast.  
+The user can search for a city, view current weather details, see search history, remove items and undo the last removal.
 
-Currently, two official plugins are available:
+### Tech stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React + Vite
+- TailwindCSS
+- WeatherAPI (`https://www.weatherapi.com/`)
 
-## React Compiler
+### Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Search weather by city name
+- Display:
+  - current temperature
+  - weather description
+  - minimum and maximum temperature for the day
+  - wind speed
+- Search history stored in `localStorage`
+- Click on a history item to load its weather again
+- Remove items from search history
+- Undo after removing a history item
 
-## Expanding the ESLint configuration
+### Setup
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Create a `.env` file in the project root and add:
+
+```bash
+VITE_WEATHERAPI_KEY=your_api_key_here
+```
+
+You can get an API key on the WeatherAPI website.
+
+### Development
+
+```bash
+npm run dev
+```
+
+After starting, the app will be available at `http://localhost:5173` (or the URL shown by Vite).
+
+### Project structure (short)
+
+- `src/pages/Home.jsx` – main page, state, search logic, integration with history
+- `src/services/weatherApi.js` – WeatherAPI request, data normalization and error handling
+- `src/hooks/useSearchHistory.js` – search history logic, stored in `localStorage`
+- `src/components/WeatherCard.jsx` – weather details card
+- `src/components/SearchHistory.jsx` – search history list
+- `src/components/ui/Input.jsx`, `src/components/ui/Button.jsx` – simple UI components
