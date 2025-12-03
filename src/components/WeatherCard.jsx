@@ -2,7 +2,7 @@ export const WeatherCard = ({ data }) => {
   const { location, current } = data;
 
   return (
-    <div className="px-6 py-4 bg-white rounded-lg  mt-4">
+    <div className="px-6 py-4 mt-6 bg-white rounded-lg">
       <div className="flex items-center justify-between mb-4">
         <div>
           <h2 className="text-2xl font-bold text-gray-800">{location.name}</h2>
@@ -13,19 +13,19 @@ export const WeatherCard = ({ data }) => {
 
       <div className="mb-4">
         <p className="text-4xl font-bold text-gray-900">{Math.round(current.temp_c)}°C</p>
-        <p className="mt-1 text-lg text-gray-600 ">{current.condition.text}</p>
+        <p className="mt-2 text-lg text-gray-600 ">{current.condition.text}</p>
       </div>
 
-      <div className="flex justify-between gap-6 pt-4 text-sm ">
+      <div className="flex justify-between gap-6 pt-4 text-sm border-t border-gray-200">
         <div>
           <p className="text-gray-500">Min / Max</p>
-          <p className="font-semibold text-gray-800">
+          <p className="mt-1 font-semibold text-gray-800">
             {Math.round(current.temp_min)}° / {Math.round(current.temp_max)}°
           </p>
         </div>
         <div>
           <p className="text-gray-500">Wind Speed</p>
-          <p className="font-semibold text-gray-800">{Math.round(current.wind_kph)} km/h</p>
+          <p className="mt-1 font-semibold text-gray-800">{Math.round(current.wind_kph)} km/h</p>
         </div>
       </div>
     </div>

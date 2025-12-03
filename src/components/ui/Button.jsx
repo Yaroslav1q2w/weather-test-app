@@ -1,6 +1,6 @@
-export default function Button({ onClick, children }) {
+export default function Button({ onClick, children, type = "button", className }) {
   return (
-    <button className="px-4 py-2 text-white transition-colors bg-blue-500 rounded" onClick={onClick}>
+    <button type={type} className={className} onClick={onClick}>
       {children}
     </button>
   );

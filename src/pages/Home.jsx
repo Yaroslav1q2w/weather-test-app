@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ClipLoader from "react-spinners/ClipLoader";
 import { Input } from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import { getWeatherByCity } from "../services/weatherApi";
@@ -68,13 +69,25 @@ export const Home = () => {
       <h1 className="mb-10 text-4xl text-[#facb7d] font-semibold">Weather App</h1>
 
       <form className="flex gap-2" onSubmit={handleSearch}>
-        <Input value={city} onChange={(e) => setCity(e.target.value)} />
-        <Button type="submit">Search</Button>
+        <Input value={city} placeholder="Enter city name..." onChange={(e) => setCity(e.target.value)} />
+        <Button className="px-6 py-2 text-white transition-colors bg-blue-500 rounded-lg hover:bg-blue-600" onClick={handleSearch} type="submit">
+          Search
+        </Button>
       </form>
 
-      {loading && <p className="mt-4 text-gray-500">Loading...</p>}
+      {loading && (
+        <div className="flex justify-center mt-6">
+          <ClipLoader size={40} color="#facc6b" />
+        </div>
+      )}
 
-      {error && <div className="p-3 mt-4 text-red-700 border border-red-200 rounded bg-red-50">{error}</div>}
+      {error && <div className="p-3 mt-4 text-red-700 border border-red-300 rounded-lg bg-red-50">{error}</div>}
+
+      {!loading && !error && !weather && (
+        <div className="mt-7 text-center">
+          <p className="text-gray-400">Enter a city name to see the weather forecast</p>
+        </div>
+      )}
 
       {weather && <WeatherCard data={weather} />}
 
@@ -83,9 +96,9 @@ export const Home = () => {
       {removedCity && (
         <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-3 rounded  flex items-center gap-3">
           <span>{removedCity} removed</span>
-          <button onClick={handleUndo} className="px-3 py-1 bg-white text-gray-800 rounded">
+          <Button onClick={handleUndo} className="px-3 py-1 bg-white text-gray-800 rounded">
             Undo
-          </button>
+          </Button>
           <button onClick={() => setRemovedCity(null)} className="text-gray-400">
             ×
           </button>
