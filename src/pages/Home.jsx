@@ -14,7 +14,7 @@ export const Home = () => {
   const [error, setError] = useState("");
   const [removedCity, setRemovedCity] = useState(null);
 
-  const { history, addToHistory, removeFromHistory } = useSearchHistory();
+  const { history, addToHistory, removeFromHistory, restoreToHistory } = useSearchHistory();
 
   const fetchWeather = async (city) => {
     setLoading(true);
@@ -50,13 +50,15 @@ export const Home = () => {
   };
 
   const handleRemove = (cityName) => {
+    const index = history.findIndex((city) => city === cityName);
+
     removeFromHistory(cityName);
-    setRemovedCity(cityName);
+    setRemovedCity({ name: cityName, index });
   };
 
   const handleUndo = () => {
     if (removedCity) {
-      addToHistory(removedCity);
+      restoreToHistory(removedCity.name, removedCity.index);
       setRemovedCity(null);
     }
   };
@@ -92,7 +94,7 @@ export const Home = () => {
 
       {removedCity && (
         <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-3 rounded  flex items-center gap-3">
-          <span>{removedCity} removed</span>
+          <span>{removedCity.name} removed</span>
           <Button onClick={handleUndo} className="px-3 py-1 bg-white text-gray-800 rounded">
             Undo
           </Button>

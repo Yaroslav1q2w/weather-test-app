@@ -23,9 +23,18 @@ export const useSearchHistory = () => {
     setHistory((prev) => prev.filter((city) => city !== cityName));
   };
 
+  const restoreToHistory = (cityName, index) => {
+    setHistory((prev) => {
+      const newHistory = [...prev];
+      newHistory.splice(index, 0, cityName);
+      return newHistory;
+    });
+  };
+
   return {
     history,
     addToHistory,
     removeFromHistory,
+    restoreToHistory,
   };
 };
